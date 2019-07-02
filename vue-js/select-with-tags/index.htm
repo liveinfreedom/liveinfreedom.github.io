@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Select with tags</title>
+    <link href="assets/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Select with tags</h1>
+
+<div id="vueSelect">
+    <select size="4" multiple="multiple" v-model="selected">
+        <option value="Овощи">Овощи</option>
+        <option value="Сыр">Сыр</option>
+        <option value="Хлеб">Хлеб</option>
+    </select>
+    <div>
+        <button v-for="value in selected" :data-value="value" @click="uncheck">X {{ value }}</button>
+    </div>
+</div>
+
+
+<script src="assets/vue.js"></script>
+<script src="assets/app.js"></script>
+
+</body>
+</html>

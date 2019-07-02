@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocation</title>
+
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <script>
+        var geoPosition;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                geoPosition = position;
+                console.log(geoPosition);
+            }, function() {
+                console.log('Геолокация запрещена пользователем!');
+            });
+        } else {
+            console.log('Браузер не поддерживает геолокацию!');
+        }
+    </script>
+</head>
+<body>
+
+<h2>Geolocation</h2>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slick</title>
+
+    <link type="text/css" href="slick.css" rel="stylesheet">
+    <script src="jquery-3.1.1.js"></script>
+    <script src="slick.js"></script>
+</head>
+<body>
+
+<div class="js-slider">
+    <a class="js-slide" href="#"><img src="img/b-slide_1.jpg"></a>
+    <a class="js-slide" href="#"><img src="img/b-slide_2.jpg"></a>
+    <a class="js-slide" href="#"><img src="img/b-slide_3.jpg"></a>
+</div>
+<script>
+    $('.js-slider').slick(/*{
+        slide: '.js-slide', // нужно указывать если каждый слайд обернут не в div
+        //slidesToShow: 4,
+        //centerMode: true,
+        autoplay: false,
+        speed: 500,        // скорость смены слайдов
+        arrows: true,      // не рендерить стрелки (если они у нас свои)
+        dots: true,
+        infinite: true, // зациклить
+        draggable: false, // иначе глючит при щелчке мышью на слайдах
+        accessibility: false, // чтобы при клике по кнопкам/маркерам переключения страница не прокручивалась в начало слайдера
+    }*/);
+</script>
+
+</body>
+</html>

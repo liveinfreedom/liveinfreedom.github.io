@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas with GSAP</title>
+
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+
+    <style>
+        .wrap {
+            max-width: 990px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1000px) {
+            .wrap {
+                width: auto;
+            }
+        }
+        .b-slider{
+            position: relative;
+            padding-top: 28.888%;
+        }
+        .b-slider__img{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        canvas{
+            box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.5);
+        }
+    </style>
+
+    <script>
+        // https://greensock.com/forums/topic/17052-gsap-and-canvas/
+        // https://greensock.com/docs/TweenMax/static.ticker
+        // https://greensock.com/forums/topic/7963-ticker-and-performance-on-canvas/
+        // https://codepen.io/GreenSock/pen/46e3af2b1c74301b65a639d37abacd3f (пример анимации на тикере)
+
+        $(function () {
+
+            function setSize(canvas, size, retina = false) { // для ретины картинки должны быть в 2 раза больше
+                canvas.width = size.width * (retina ? 2 : 1);
+                canvas.height = size.height * (retina ? 2 : 1);
+                $(canvas)
+                    .css('width', size.width+'px')
+                    .css('height', size.height+'px');
+            }
+
+            function addCanvas(size){
+                let canvas = $('<canvas></canvas>')[0];
+                let context = canvas.getContext('2d');
+                setSize(canvas, size);
+                $('body').append(canvas);
+                return {node: canvas, context: context, size: size};
+            }
+
+            function resetCoords(size){
+                //return { x: 0, y: size.height / 2};
+                return { x: 0, y: 0};
+            }
+
+            let obCanvas = addCanvas({width:800, height:400});
+            //let curX = 1;
+            let delta = 2;
+            obCanvas.context.fillStyle = 'red';
+            let coordsCurr = resetCoords(obCanvas.size);
+
+            function draw(event) {
+                obCanvas.context.fillRect(coordsCurr.x, coordsCurr.y, delta, delta);
+                console.log( 'coordsCurr:', coordsCurr);
+            }
+
+            $('button').click(function () {
+                coordsCurr = resetCoords(obCanvas.size);
+                obCanvas.context.clearRect(0, 0, obCanvas.size.width, obCanvas.size.height);
+
+                TweenLite.to(coordsCurr, 3, {
+                    x: obCanvas.size.width,
+                    ease: Power0.easeNone,
+                });
+                TweenLite.to(coordsCurr, 3, {
+                    y: obCanvas.size.height,
+                    ease: Power4.easeInOut,
+                    onComplete: function () {
+                        TweenMax.ticker.removeEventListener("tick", draw);
+                    }
+                });
+
+                TweenMax.ticker.addEventListener("tick", draw); // синхронизирован с FPS
+            });
+        });
+    </script>
+</head>
+<body class="wrap">
+
+<h1>Canvas with GSAP</h1>
+<button>Нарисовать точки</button><br><br>
+
+
+</body>
+</html>

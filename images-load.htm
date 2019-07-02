@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Images loading event</title>
+
+    <script src="http://st.iex.su/jquery.js"></script>
+</head>
+<body>
+
+<h2>Images loading event</h2>
+<img src="" style="width: 10%; height: 150; background: #62c5c5">
+<!--
+<img src="http://ichef-1.bbci.co.uk/news/624/cpsprodpb/93D5/production/_90454873_36683dd5-8c4c-4235-ac07-52b21b18b248.jpg">
+<script>
+    var $img = $('img');
+    console.log($img[0]);
+
+    $img[0].onload = function () {
+        console.log('loaded!');
+    };
+    $img[0].onerror = function () {
+        console.log('error!');
+    };
+
+    $img.on('load', function () {
+        console.log('jq loaded 1');
+    });
+    $img.on('load', function () {
+        console.log('jq loaded 2');
+    });
+</script>
+-->
+<div class="wrap" style="background-color: #999999; overflow: hidden; height: 0">
+    <div class="item" style="width: 90px; height: 90px; background-color: #77cbff; cursor: pointer; opacity: 0"></div>
+</div>
+
+</body>
+</html>

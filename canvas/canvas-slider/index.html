@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script src="js/IexCanvasSlider.js"></script>
+
+    <style>
+        .wrap {
+            max-width: 990px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1000px) {
+            .wrap {
+                width: auto;
+            }
+        }
+        .b-slider{
+            position: relative;
+            padding-top: 28.888%;
+        }
+        .b-slider__img{
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="wrap">
+
+<h1>Canvas</h1>
+
+<div class="b-slider">
+    <img class="b-slider__img" src="slider/b-slide_1.jpg">
+    <img class="b-slider__img" src="slider/b-slide_2.jpg">
+    <img class="b-slider__img" src="slider/b-slide_3.jpg">
+</div>
+<a href="#" class="js-nav" data-delta="-1">&lt;&lt; пред</a>&nbsp;<a href="#" class="js-nav" data-delta="1">след &gt;&gt;</a>
+
+</body>
+</html>

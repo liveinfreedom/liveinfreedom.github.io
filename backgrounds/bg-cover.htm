@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Фон без background-size: cover</title>
+
+    <link rel="stylesheet" href="animate.css">
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <style>
+        /*
+        Фон без background-size: cover
+        Можно использовать в iexShiftingSlider
+        Взято отсюда https://css-tricks.com/perfect-full-page-background-image/
+        */
+        .bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+        }
+        .bg img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            min-width: 50%;
+            min-height: 50%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="bg">
+    <img src="bg.jpg"/>
+</div>
+
+</body>
+</html>

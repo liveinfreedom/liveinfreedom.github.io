@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Goodstone</title>
+
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <style>
+        .wrap{
+            width: 960px;
+            height: 440px;
+            margin: 0 auto;
+            background-color: #ddd;
+        }
+        .sprite{
+            width: 100%;
+            height: 100%;
+            background-color: cornflowerblue;
+        }
+        .contur-hover,
+        .contur-blur{
+            fill:#ffffff;
+            stroke:none;
+        }
+        .contur-blur{
+            fill:red;
+            display: none;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.sprite .contur-hover')
+                .on('mouseenter', function () {
+                    $(this).siblings('.contur-blur').show();
+                })
+                .on('mouseleave', function () {
+                    $(this).siblings('.contur-blur').hide();
+                })
+        });
+    </script>
+</head>
+<body>
+
+<h2>Goodstone</h2>
+
+<div class="wrap">
+    <svg class="sprite" viewBox="0 0 1920 880" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink= "http://www.w3.org/1999/xlink">
+        <defs>
+            <image id="sprite" xlink:href="staff.jpg" width="1920" height="880"/>
+            <filter id="blur" x="0" y="0">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="16" />
+            </filter>
+        </defs>
+        <g>
+            <svg viewBox="70 100 200 600" width="200" height="600" x="200" y="0">
+                <use xlink:href="#sprite"/>
+            </svg>
+            <path class="contur-blur" id="path4524" d="M 341.78711 48 L 273.70117 49.361328 L 274.89844 132.33203 L 221.95703 159.66016 L 164.76562 284.93555 L 235.57422 380.25586 L 360.85156 377.53125 L 341.78711 238.63867 L 379.91406 166.46875 L 344.50977 139.23438 L 341.78711 48 z" filter="url(#blur)"/>
+            <path class="contur-hover" id="path4524" d="M 341.78711 48 L 273.70117 49.361328 L 274.89844 132.33203 L 221.95703 159.66016 L 164.76562 284.93555 L 235.57422 380.25586 L 360.85156 377.53125 L 341.78711 238.63867 L 379.91406 166.46875 L 344.50977 139.23438 L 341.78711 48 z"/>
+        </g>
+        <g>
+            <svg viewBox="470 180 150 400" width="150" height="400" x="1400" y="200">
+                <use xlink:href="#sprite"/>
+            </svg>
+            <path class="contur-blur" id="path4526-6" d="m 1413.4468,306.7234 25.7076,-27.3272 -1.1969,-82.97067 68.0851,-1.3617 2.7234,91.23404 35.4042,27.23404 -2.7233,99.40426 -13.6171,185.19148 -106.2128,-2.72339" filter="url(#blur)"/>
+            <path class="contur-hover" id="path4526-6" d="m 1413.4468,306.7234 25.7076,-27.3272 -1.1969,-82.97067 68.0851,-1.3617 2.7234,91.23404 35.4042,27.23404 -2.7233,99.40426 -13.6171,185.19148 -106.2128,-2.72339"/>
+        </g>
+    </svg>
+</div>
+
+
+</body>
+</html>

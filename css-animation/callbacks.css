@@ -1,0 +1,65 @@
+.block{
+    display: inline-block;
+    background-color: #ccc;
+    padding: 11px 18px;
+    font-size: 14px;
+}
+
+.animCommon{
+    animation-fill-mode: forwards;
+    animation-delay: 0s;
+    animation-timing-function: ease;
+    animation-duration: 1s;
+}
+
+@keyframes animRight {
+    0% {
+        transform: translate3d(0,0,0);
+    }
+    100% {
+        transform: translate3d(100%,0,0);
+    }
+}
+@keyframes animDown {
+    0% {
+        transform: translate3d(100%,0,0);
+    }
+    100% {
+        transform: translate3d(100%,100%,0);
+    }
+}
+@keyframes animLeft {
+    0% {
+        transform: translate3d(100%,100%,0);
+    }
+    100% {
+        transform: translate3d(0,100%,0);
+    }
+}
+@keyframes animUp {
+    0% {
+        transform: translate3d(0,100%,0);
+    }
+    100% {
+        transform: translate3d(0,0,0);
+    }
+}
+
+.moveRight{
+    animation-name: animRight;
+}
+
+.moveDown{
+    animation-duration: 2s;
+    animation-name: animDown;
+}
+
+.moveLeft{
+    animation-duration: 1s;
+    animation-name: animLeft;
+}
+
+.moveUp{
+    animation-duration: 0.5s;
+    animation-name: animUp;
+}

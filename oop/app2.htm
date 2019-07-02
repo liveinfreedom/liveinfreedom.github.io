@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JS App</title>
+
+    <script src="http://st.iex.su/jquery.js"></script>
+    <script>
+        var app = (function($){
+            // Коллекция публичных методов и свойств приложения.
+            // Не "засоряем" ее унаследованными от Object методами и свойствами.
+            var _ = Object.create(null);
+
+            var privateMethod = function () {
+                console.log('privateMethod()');
+            };
+            _.publicMethod = function () {
+                privateMethod();
+            };
+
+            _.timeStamp = function(){
+                var time = new Date();
+                return time.toLocaleTimeString()+'.'+time.getMilliseconds();
+            };
+
+            // Инициализация ДО $(document).ready()
+            (function () {
+                console.log(_.timeStamp(),': до .ready()');
+            })();
+
+            // Инициализация ПОСЛЕ $(document).ready()
+            var onReadyInit = function () {
+                console.log(_.timeStamp(),': после .ready()');
+            };
+
+            $(document).ready(function () {
+                onReadyInit();
+            });
+
+            return _;
+        })($);
+    </script>
+</head>
+<body>
+
+<h2>JS App</h2>
+
+
+</body>
+</html>

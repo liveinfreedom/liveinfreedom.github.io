@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор накоплений</title>
+
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <style>
+        body{
+            width: 1000px;
+            margin: 0 auto;
+        }
+        p{
+            margin: 20px 0 5px;
+            font-size: 17px;
+        }
+        input{
+            width: 250px;
+            font-size: 16px;
+        }
+        .td{
+            display: table-cell;
+            vertical-align: top;
+        }
+        .td + .td{
+            padding-left: 40px;
+        }
+    </style>
+
+    <script>
+        function formatNum(number) {
+            var offset, result = '', i;
+
+            number = number.toString().replace(/\s+/g, '');
+            offset = number.length % 3;
+
+            result += number.substr(0, offset) + ' ';
+            number = number.substr(offset);
+            for(i = 0; i < number.length; ++i) {
+                result += number.substr(i,1);
+                if (i % 3 === 2) {
+                    if (i != number.length-1) {
+                        result += ' ';
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        $(document).ready(function(){
+            var $inputs = $('input');
+            
+            var getInpVal = function(selector){
+                return parseInt( $inputs.filter(selector).val().replace(/\s+/g, '') );
+            };
+
+            var formatInpVals = function(){
+                $inputs.each(function(){
+                    $(this).val( formatNum( $(this).val() ) );
+                });
+            };
+
+            var calcAll = function(){
+                
+                var yearsCnt = getInpVal('#yearsCnt');
+
+
+                // Сумма накоплений
+                var savePay = getInpVal('#savePay');
+                var saveInc = getInpVal('#saveInc');                
+                var saveSumm = 0;
+                for (var i=1; i<=yearsCnt ; i++){
+                    saveSumm += (savePay + (i-1)*saveInc) * 12
+                }
+                $('#saveSumm').val(formatNum(saveSumm));
+
+
+                // Проценты с депозита
+                var depPers = getInpVal('#depPers') / 100 / 12; // ставка за месяц
+                //console.log(depPers);
+
+                var depSumm = 0;
+                for (var y=1; y<=yearsCnt ; y++){
+                    for (var m=1; m<=12 ; m++){
+                        //var before =  depSumm;
+                        if (depSumm) { // считаем проценты только со второго месяца
+                            depSumm += depSumm*depPers;
+                        }
+                        depSumm += savePay + (y-1)*saveInc;
+
+                        //console.log(m*y , ' | ' , before , ' | ' , before*depPers , ' | ' , savePay , ' | ' , depSumm );
+                    }
+
+                }
+                $('#depSumm').val(formatNum(parseInt(depSumm - saveSumm)));
+
+
+                // Расходы на съем
+                var arendCost = getInpVal('#arendCost');
+                $('#arendSumm').val(formatNum( arendCost * yearsCnt * 12 ));
+            };
+
+            $inputs.change(function(){
+                formatInpVals();
+                calcAll();
+            });
+            $inputs.filter(':first').change();
+
+        });
+    </script>
+
+</head>
+<body>
+
+<br/><br/>
+
+<div class="td"><h2 style="margin: 0">Период накоплений, лет</h2></div>
+<div class="td"><input id="yearsCnt" type="text" value="8"></div>
+
+<hr>
+
+<div class="td">
+    <h2>Накопления</h2>
+
+    <p>Ежемесячный платеж, руб</p>
+    <input id="savePay" type="text" value="6000">
+
+    <p>Ежегодное увеличение платежа, руб</p>
+    <input id="saveInc" type="text" value="2000">
+
+    <p style="font-weight: bold;">ВСЕГО за период, руб</p>
+    <input id="saveSumm" type="text" value="" readonly style="font-weight: bold;">
+</div>
+<div class="td">
+    <h2>Съем квартиры</h2>
+
+    <p>Стоимость съема, руб/мес</p>
+    <input id="arendCost" type="text" value="13000">
+
+    <p style="font-weight: bold;">ВСЕГО за период, руб</p>
+    <input id="arendSumm" type="text" value="" readonly style="font-weight: bold;">
+</div>
+
+<br/>
+
+<div class="td">
+    <h2  style="line-height: 20px;">
+        Проценты с депозита<br>
+        <span style="font-size: 16px">(ежемесячная капитализация)</span>
+    </h2>
+
+    <p>Процентная ставка, годовых</p>
+    <input id="depPers" type="text" value="8">
+
+    <p style="font-weight: bold;">ПРИБЫЛЬ за период, руб</p>
+    <input id="depSumm" type="text" value="" readonly style="font-weight: bold;">
+</div>
+<div class="td">
+    <h2>Ипотечные калькуляторы</h2>
+    <p><a target="_blank" href="http://rusipoteka.ru/ipotechnyj_kalkulyator/">Раз</a>, <a target="_blank" href="http://calcsoft.ru/credit_result?summa=1500000&valuta=%D1%80%D1%83%D0%B1.&procent=13.75&srok=120&tip-platezha=%D0%90%D0%BD%D0%BD%D1%83%D0%B8%D1%82%D0%B5%D1%82%D0%BD%D1%8B%D0%B9&nachalo-vyplat=1">Два</a></p>
+</div>
+
+</body>
+</html>

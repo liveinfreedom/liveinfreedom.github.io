@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Флексы</title>
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <style>
+        .wrap{
+            display: flex;
+            height: 100px;
+            background-color: #EEEEEE;
+        }
+        .item{
+            box-shadow: 0 0 0 1px #555 inset;
+            background-color: #c4c4c4;
+            flex-basis: 0;
+        }
+        .item:first-child{
+            flex-grow: 0;
+        }
+        .item:last-child{
+            flex-grow: 1;
+        }
+        .content1{
+            display: inline-block;
+            background-color: #1b6d85;
+            width: 200px;
+        }
+        .content2{
+            background-color: #1b6d85;
+        }
+
+        .flex-wrap{
+            display: inline-flex;
+            width: 200px;
+            height: 100px;
+            background-color: #EEEEEE;
+        }
+        .flex-item{
+
+        }
+    </style>
+</head>
+<body>
+
+<h2>Флексы</h2>
+
+<div class="wrap">
+    <div class="item">
+        <div class="content1">Контент 1</div>
+    </div>
+    <div class="item">
+        <div class="content2">Контент 1</div>
+    </div>
+</div>
+
+</body>
+</html>

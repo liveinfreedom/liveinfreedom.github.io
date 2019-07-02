@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Crossbrowser</title>
+    <link href="assets/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Crossbrowser</h1>
+
+<ul id="vueList">
+    <li v-for="item in list">{{ item }}</li>
+</ul>
+
+<br><br>
+
+<div id="vueLength">
+    <input type="text" v-model="text" v-on:input="check">
+    {{length}} 10 символов
+</div>
+
+<br><br>
+
+<div id="blog-posts">
+    <blog-post title="Заголовок"></blog-post>
+</div>
+
+
+<script src="assets/vue.js"></script>
+<script src="assets/app.js"></script>
+
+</body>
+</html>

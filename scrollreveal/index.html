@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript</title>
+
+    <script src="http://st.iex.su/jquery.js"></script>
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    
+    <script>
+        $(document).ready(function () {
+            var sr = ScrollReveal();
+            sr.reveal('.block', {
+                //scale: 1,
+                distance: '-40px',
+                viewOffset: {
+                    top: 0,
+                    right: 0,
+                    bottom: 150,
+                    left: 0
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<h2>ScrollReveall</h2>
+<div class="wrap">
+    <div class="block block_1"></div>
+    
+    <br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-
+    
+    <div class="block block_2 color1"></div>
+    
+    <br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-
+    
+    <div class="block block_3 color2"></div>
+</div>
+
+</body>
+</html>

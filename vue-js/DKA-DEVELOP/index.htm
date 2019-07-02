@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue за 1 час</title>
+    <link href="assets/styles.css" rel="stylesheet" type="text/css">
+    <style>
+        h2{
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<h1>Vue за 1 час от <a href="https://www.youtube.com/watch?v=b6Ac0jcqJIg">DKA-DEVELOP</a></h1>
+
+<h2>(vmFirst)</h2>
+<div id="vmFirst">
+    Текст статический и <i v-bind:title="title" :class="classes"><u>{{ text }}</u></i>
+
+    <h4 v-if="status">Статус true</h4>
+    <h4 v-else>Статус false</h4>
+
+    <hr>
+
+    <h4 v-if="cart === 1">Товаров в корзине 1</h4>
+    <h4 v-else-if="cart === 2">Товаров в корзине 2</h4>
+    <h4 v-else>Товаров в корзине {{ cart }}</h4>
+
+    <hr>
+
+    <template v-if="template === 1">
+        <h4>Заголовок в теге template 1</h4>
+        <p>Текст в теге template 1</p>
+    </template>
+    <template v-if="template !== 1">
+        <h4>Заголовок в теге template !=1</h4>
+        <p>Текст в теге template !=1</p>
+    </template>
+</div>
+
+<h2>(vmClassesStyles)</h2>
+<div id="vmClassesStyles">
+    <h4 class="defaul1 default2" :class="{ vueClass1: classProp1,  vueClass2: classProp2 }">Заголовок в теге template 1</h4>
+    <p :style="{ color: color, fontSize: fontSize, transform: transform }">Текст в теге template 1</p>
+</div>
+
+<h2>(vmLists)</h2>
+<div id="vmLists">
+    Простой индексированный массив
+    <ul>
+        <li v-for="(item,index) in products">{{ index + ': ' + item }}</li>
+    </ul>
+    Массив объектов
+    <ul>
+        <li v-for="user in users">{{ user.login + ': ' + user.fio }}</li>
+    </ul>
+</div>
+
+<!-- версия для разработки, отображает полезные предупреждения в консоли -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- production-версия, оптимизированная для размера и скорости -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+<script src="assets/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Всплывание событий</title>
+    <script src="jquery-3.1.1.js"></script>
+    <style>
+        div {padding: 10px}
+        .wrap1{ background-color: silver}
+        .wrap2{ background-color: moccasin}
+        .wrap3{ background-color: darksalmon}
+    </style>
+    <script>
+        $(function () {
+            $('*').on('click', function (e) {
+                console.log( this );
+            });
+        });
+    </script>
+</head>
+<body class="body">
+
+<h2>Всплывание событий</h2>
+
+<div class="wrap1" style="width: 100px">
+    wrap1
+    <div class="wrap2">
+        wrap2
+        <div class="wrap3">
+            wrap3
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

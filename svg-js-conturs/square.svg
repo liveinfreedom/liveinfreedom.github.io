@@ -1,0 +1,15 @@
+<svg id="square" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <defs>
+        <style>
+            .cls-1 {
+            fill: #f0f;
+            stroke: #000;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1px;
+            fill-rule: evenodd;
+            }
+        </style>
+    </defs>
+    <path id="_1" data-name="1" class="cls-1" d="M806,653h31v31H806V653Z" transform="translate(-805.5 -652.5)"/>
+</svg>

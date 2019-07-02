@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript</title>
+
+    <link rel="stylesheet" href="animate.css">
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <style>
+        .wrap{
+            background-color: blue;
+            margin: 0 auto;
+            max-width: 960px;
+        }
+        .block1{
+            display: block;
+            position: relative;
+            padding-top: 20%;
+            background-color: #ccc;
+            box-sizing: border-box;
+        }
+        .block1 span{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+    </style>
+    <script>
+        $(function () {
+            let $block = $('.block1');
+            function calcSize(){
+                $block.find('span').text( $block.outerWidth() + 'x' + $block.outerHeight() + 'px' );
+            }
+            calcSize();
+            $(window).resize(calcSize);
+        })
+    </script>
+</head>
+<body>
+
+<h2>Паддинг в процентах</h2>
+
+<div class="wrap">
+    <div class="block1"><span></span></div>
+</div>
+
+
+</body>
+</html>

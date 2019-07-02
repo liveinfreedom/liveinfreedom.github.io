@@ -1,0 +1,22 @@
+.wrap{
+    width: 1000px;
+    margin: auto;
+    border: 1px solid gray;
+}
+@media (max-width: 1100px) {
+    .wrap{
+        width: 90%;
+    }
+}
+
+.block{
+    height: 200px;
+    background-color: #ccc;
+}
+
+.color1{
+    background-color: #62c5c5;
+}
+.color2{
+    background-color: #f4efba;
+}

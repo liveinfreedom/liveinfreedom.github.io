@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript</title>
+
+    <link rel="stylesheet" href="animate.css">
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <style>
+        .wrap{
+            width: 200px;
+            border: 1px solid;
+            overflow: hidden;
+        }
+
+        .block{
+            height: 100px;
+            background-color: #ccc;
+        }
+
+        .color1{
+            background-color: #62c5c5;
+        }
+        .color2{
+            background-color: #f4efba;
+        }
+
+
+        .block{
+            transition: all 1s;
+        }
+        .wrap:hover .block_2{
+            transform: translate3d(0, -70px, 0);
+        }
+        .wrap:hover .block_3{
+            transform: translate3d(0, -120px, 0);
+        }
+
+    </style>
+</head>
+<body>
+
+<h2>JavaScript</h2>
+<div class="wrap">
+    <div class="block block_1"></div>
+    <div class="block block_2 color1"></div>
+    <div class="block block_3 color2"></div>
+</div>
+
+</body>
+</html>

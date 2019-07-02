@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ООП</title>
+
+    <script src="http://st.iex.su/jquery.js"></script>
+    <script>
+        function Class1(){
+            this.a = 1;
+            this.b = 2;
+        }
+        Class1.prototype.x = 10;
+        Class1.prototype.y = 20;
+
+        function Class2(){
+            this.z = 30;
+        }
+        Class2.prototype = Class1.prototype;
+
+        var class2item = new Class2();
+        console.log(class2item);
+    </script>
+
+    <style>
+    </style>
+</head>
+<body>
+
+<h2>ООП</h2>
+<h3>1. Пробуем наследование...</h3>
+
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript</title>
+
+    <link rel="stylesheet" href="animate.css">
+    <script src="http://st.iex.su/jquery.js"></script>
+
+    <style>
+        .block1{
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+        }
+
+        .color1{
+            background-color: #62c5c5;
+        }
+        .color2{
+            background-color: #f4efba;
+        }
+        .color3{
+            background-color: #b0f4c2;
+        }
+
+        @keyframes updown { /* два ключевых кадра */
+            from { transform: translate(0, 0) }
+            to { transform: translate(0, -20px) }
+        }
+        .anim-up { animation: updown 1s linear; }
+        .anim-updown { animation: updown 1s linear infinite; }
+
+        @keyframes cycle { /* много ключевых кадров */
+            0%   { transform: translate3d(0, 0, 0) }
+            25%  { transform: translate3d(140px, 0, 0) }
+            50%  { transform: translate3d(140px, 110px, 0) }
+            75%  { transform: translate3d(0, 110px, 0) }
+            100% { transform: translate3d(0, 0, 0) }
+        }
+        .anim-cycle { animation: cycle 4s infinite; }
+
+        @keyframes zigzag { /* много ключевых кадров */
+            0%   { transform: translate3d(0, 0, 0); background-color: red; }
+            33%  { transform: translate3d(0, 140px, 0) }
+            66%  { transform: translate3d(140px, 0, 0) }
+            100% { transform: translate3d(140px, 140px, 0);  background-color: blue; }
+        }
+        .anim-zigzag {
+            animation: zigzag 3s;
+        }
+
+        .fill-mode-both{
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+        .fill-mode-backwards{
+            -webkit-animation-fill-mode: backwards;
+            animation-fill-mode: backwards;
+        }
+        .fill-mode-forwards{
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+        }
+    </style>
+</head>
+<body>
+
+<h2>JavaScript</h2>
+<!--
+<div class="block1 anim-up"></div>
+<div class="block1 anim-updown color1"></div>
+<div class="block1 anim-cycle color2"></div>
+<br>
+<div class="block1 color3"></div>
+<br><br>
+-->
+<div class="block1 anim-zigzag">animation-fill-mode: none</div>
+<br><br>
+<div class="block1 anim-zigzag fill-mode-backwards">animation-fill-mode: backwards</div>
+<br><br>
+<div class="block1 anim-zigzag fill-mode-forwards">animation-fill-mode: forwards</div>
+<br><br>
+<div class="block1 anim-zigzag fill-mode-both">animation-fill-mode: both</div>
+
+</body>
+</html>
