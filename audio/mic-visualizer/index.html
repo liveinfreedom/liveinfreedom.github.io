@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Визуализация голоса с микрофона</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo {
+            margin: 2px;
+            border-radius: 30px;
+        }
+        h1 {
+            color: #000;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Визуализация голоса с микрофона</h1>
+<p><small><a href="https://prog-time.ru/web-audio-api-praktika-vizualizatsiya-golosa-s-mikrofona/" target="_blank">источник</a></small></p>
+<p>Нажмите на экран...<br></p>
+
+<script>
+    /*СОЗДАЁМ ОСНОВНЫЕ ПЕРЕМЕННЫЕ*/
+    var body, num, array, width, context, logo, myElements, analyser, src, height;
+
+    /*ЗАПИСЫВАЕМ В ПЕРЕМЕННУЮ body ЭЛЕМЕНТ body*/
+    body = document.querySelector('body');
+
+    /*УКАЗЫВАЕМ КОЛИЧЕСТВО СТОЛБЦОВ НА ИНДИКАТОРЕ*/
+    num = 32;
+
+    /*СОЗДАЕМ МАССИВ*/
+    array = new Uint8Array(num*2);
+
+    /*УКАЗЫВАЕМ ДЛИНУ СТОЛБИКОВ В PX*/
+    width = 10;
+
+    /*ПРИ НАЖАТИИ НА КНОПКУ МЫШИ В ДОКУМЕНТЕ*/
+    window.onclick = function(){
+
+        if(context) return;
+
+        /*УДАЛЯЕМ ЭЛЕМЕНТ С ТЕКСТОМ*/
+        body.querySelector('h1').remove();
+
+        /*ПРОПИСЫВАЕМ ЦИКЛ ВНУТРИ КОТОРОГО БУДЕМ СОЗДАВАТЬ ЭЛЕМЕНТЫ НАШИХ СТОЛБИКОВ*/
+        for(var i = 0 ; i < num ; i++){
+            logo = document.createElement('div'); /*КАЖДЫЙ ЭЛЕМЕНТ БУДЕТ ЗАПИСЫВАТЬСЯ ВНУТРИ ПЕРЕМЕННОЙ logo*/
+            logo.className = 'logo'; /*ДЛЯ ВЫШЕ СОЗДАННОГО ЭЛЕМЕНТА МЫ ПРОПИСЫВАЕМ КЛАСС logo*/
+            logo.style.background = 'blue'; /*ПРОПИСЫВАЕМ КРАСНЫЙ ЦВЕТ ФОНА*/
+            logo.style.minWidth = width+'px'; /*УКАЗЫВАЕМ ЕГО ШИРИНУ*/
+            body.appendChild(logo); /*ДОБАВЛЯЕМ ЭЛЕМЕНТ ВО ВНУТРЬ ЭЛЕМЕНТА body*/
+        }
+
+        myElements = document.getElementsByClassName('logo');/*ЗАПИСЫВАЕМ ЭЛЕМЕНТ logo В ПЕРЕМЕННУЮ myElement*/
+        context = new AudioContext(); /*СОЗДАЕМ НОВЫЙ ЭКЗЕМПЛЯР КЛАССА AudioContext*/
+
+        /*СОЗДАЁМ АНАЛАЙЗЕР*/
+        analyser = context.createAnalyser();
+
+        /*СОЗДАЁМ ЗАПРОС ДОСТУПА К МИКРОФОНУ*/
+        navigator.mediaDevices.getUserMedia({
+            audio: true
+        }).then(stream => {
+            src = context.createMediaStreamSource(stream);
+            src.connect(analyser);
+            loop();
+        }).catch(error => {
+            alert(error + '\r\n\ Отклонено. Страница будет обновлена!');
+            location.reload();
+        });
+    };
+
+    function loop() {
+        window.requestAnimationFrame(loop);
+        analyser.getByteFrequencyData(array);
+        for(var i = 0 ; i < num ; i++){
+            height = array[i+num];
+            myElements[i].style.minHeight = height+'px';
+            myElements[i].style.opacity = 0.008*height;
+        }
+    }
+</script>
+
+</body>
+</html>
