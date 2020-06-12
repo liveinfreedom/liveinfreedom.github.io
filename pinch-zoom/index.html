@@ -3,20 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>PinchZoom.js</title>
+
+    <link href="../reset.css" rel="stylesheet"/>
     <script src="pinch-zoom.min.js"></script>
     <style>
+        body{
+            height: 100vh;
+            position: relative;
+        }
+        .b-modal{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.2);
+        }
         .pinch-zoom-container{
-            width: 200px;
-            height: 400px;
+            height: 100%;
+            background-color: rgba(255,0,0,0.2);
         }
     </style>
 </head>
 <body>
 <h1>PinchZoom.js</h1>
 
-<img src="img.jpg">
+<div class="b-modal">
+    <img src="img.jpg">
+</div>
+
 <script>
-    new PinchZoom(document.querySelector('img'));
+    let img = document.querySelector('img');
+    new PinchZoom(img, {
+        draggableUnzoomed: false,
+    });
 </script>
 
 </body>
