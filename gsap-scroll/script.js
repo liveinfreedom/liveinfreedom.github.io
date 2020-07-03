@@ -6,6 +6,7 @@ $(function () {
     let $sections = $wrap.find('.b-hscroll-section');
     let widthAll = $wrap.outerWidth();
     let widthOne = $sections.outerWidth();
+    let visibleCount = 5;
 
     $sections.each(function (i, el) {
         $(this).text(i);
@@ -16,7 +17,7 @@ $(function () {
     console.log('---');
 
     gsap.to($sections, {
-        xPercent: -100 * ($sections.length - 1),
+        xPercent: -100 * ($sections.length - visibleCount - 1),
         ease: 'none',
         scrollTrigger: {
             trigger: $wrap[0],
