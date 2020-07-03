@@ -7,6 +7,7 @@ $(function () {
     let widthAll = $wrap.outerWidth();
     let widthOne = $sections.outerWidth();
     let visibleCount = 5;
+    let scrollCount = $sections.length - visibleCount - 1;
 
     $sections.each(function (i, el) {
         $(this).text(i);
@@ -17,7 +18,7 @@ $(function () {
     console.log('---');
 
     gsap.to($sections, {
-        xPercent: -100 * ($sections.length - visibleCount - 1),
+        xPercent: -100 * scrollCount,
         ease: 'none',
         scrollTrigger: {
             trigger: $wrap[0],
@@ -27,7 +28,7 @@ $(function () {
             //end: () => "+=" + $wrap.outerWidth(),
             pin: true,
             scrub: 1,
-            snap: 1 / ($sections.length - 1),
+            snap: 1 / scrollCount,
             onUpdate: ({progress, direction, isActive}) => console.log(progress, direction, isActive)
         }
     });
