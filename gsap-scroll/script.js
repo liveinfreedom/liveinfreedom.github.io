@@ -4,18 +4,12 @@ $(function () {
 
     let $wrap = $('.b-hscroll');
     let $sections = $wrap.find('.b-hscroll-section');
-    let widthAll = $wrap.outerWidth();
-    let widthOne = $sections.outerWidth();
     let visibleCount = 5;
     let scrollCount = $sections.length - visibleCount - 1;
 
     $sections.each(function (i, el) {
         $(this).text(i);
     });
-
-    console.log('---');
-    console.log($sections.length, widthAll, widthOne);
-    console.log('---');
 
     gsap.to($sections, {
         xPercent: -100 * scrollCount,
@@ -29,7 +23,7 @@ $(function () {
             pin: true,
             scrub: 1,
             snap: 1 / scrollCount,
-            onUpdate: ({progress, direction, isActive}) => console.log(progress, direction, isActive)
+            //onUpdate: ({progress, direction, isActive}) => console.log(progress, direction, isActive)
         }
     });
 
