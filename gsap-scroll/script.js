@@ -1,0 +1,36 @@
+$(function () {
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    let $wrap = $('.b-hscroll');
+    let $sections = $wrap.find('.b-hscroll-section');
+    let widthAll = $wrap.outerWidth();
+    let widthOne = $sections.outerWidth();
+
+    $sections.each(function (i, el) {
+        $(this).text(i);
+    });
+
+    console.log('---');
+    console.log($sections.length, widthAll, widthOne);
+    console.log('---');
+
+    gsap.to($sections, {
+        xPercent: -100 * ($sections.length - 1),
+        ease: 'none',
+        scrollTrigger: {
+            trigger: $wrap[0],
+            //endTrigger: $sections.last()[0],
+            start: 'center center',
+            //end: 'right right',
+            //end: () => "+=" + $wrap.outerWidth(),
+            pin: true,
+            scrub: 1,
+            snap: 1 / ($sections.length - 1),
+            onUpdate: ({progress, direction, isActive}) => console.log(progress, direction, isActive)
+        }
+    });
+
+});
+
+

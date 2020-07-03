@@ -1,0 +1,13 @@
+.b-hscroll{
+    overflow: hidden;
+    background-color: lightgray;
+}
+
+.b-hscroll-track{
+
+}
+
+.b-hscroll-section{
+    text-align: center;
+    opacity: 0.5;
+}
