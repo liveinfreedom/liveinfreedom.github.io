@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Page with React</title>
+</head>
+<body>
+
+<div id="like_button_container"></div>
+
+<!-- На продакшен замените окончание «development.js» на «production.min.js». -->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+<!-- Наш React-компонент. -->
+<script>
+    const domContainer = document.querySelector('#like_button_container');
+    ReactDOM.render(e(LikeButton), domContainer)
+</script>
+
+</body>
+</html>
