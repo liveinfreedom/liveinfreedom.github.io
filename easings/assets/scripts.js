@@ -9,13 +9,14 @@ $(function(){
 
     function animate() {
         if (Date.now() - timeStart < duration) {
-            x++;
+            x += 2;
             $block.css('transform', 'translateX('+x+'px)');
             requestAnimationFrame(animate);
         }
     }
 
     $button.click(function(){
+        x = 0;
         duration = parseInt($input.val()) * 1000;
         timeStart = Date.now();
         requestAnimationFrame(animate);
