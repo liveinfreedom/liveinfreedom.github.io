@@ -11,7 +11,7 @@ $(function(){
         x = 0;
 
     function easeInOutSine(progress) {
-        return -(Math.cos(Math.PI * p) - 1) / 2;
+        return -(Math.cos(Math.PI * progress) - 1) / 2;
     }
 
     function animate() {
