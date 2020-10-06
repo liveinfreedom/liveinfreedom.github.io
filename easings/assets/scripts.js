@@ -24,11 +24,15 @@ $(function(){
         }
     }
 
-    $button.click(function(){
+    function start() {
         x = 0;
         duration = parseInt($input.val()) * 1000;
         timeStart = Date.now();
         $block.css('transform', 'translateX(0)');
+    }
+
+    $button.click(function(){
+        start();
         requestAnimationFrame(animate);
     });
 });
