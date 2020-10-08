@@ -39,7 +39,7 @@ $(function(){
        timeElapsed = Date.now() - timeStart;
         if (timeElapsed < duration) {
             progress = timeElapsed / duration;
-            offsetCur = offset * easeInOutSine(progress);
+            offsetCur = offset * animation(progress);
             $block.css('transform', 'translateX('+offsetCur+'px)');
             requestAnimationFrame(animate);
         }
