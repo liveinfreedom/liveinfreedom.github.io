@@ -134,13 +134,14 @@ $(function(){
         offsetMax = parseInt($offset.val());
         iexAnimation.duration = parseInt($duration.val());
         iexAnimation.easing = $easing.val();
-
+console.log('onStart', iexAnimation);
         offsetCur = 0;
         $block.css('transform', 'translateX('+offsetCur+'px)');
     }
 
     iexAnimation.onStep = function (progressSrc, progressEased) {
         offsetCur = offsetMax * progressEased;
+console.log('onStep', offsetCur, progressSrc, progressEased);
         $block.css('transform', 'translateX('+offsetCur+'px)');
     }
 
