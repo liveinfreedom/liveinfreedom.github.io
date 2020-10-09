@@ -47,7 +47,7 @@ function IexEasedAnimation(){
      * Длительность анимации (сек)
      * @type {number}
      */
-    app.duration = 1;
+    app.duration = 0;
 
     /**
      * Время начала анимации
@@ -74,15 +74,18 @@ function IexEasedAnimation(){
     app.callbacks = ['onStart','onStep','onFinish'];
 
     /**
-     * Пользовательский коллбэк начала анимации
+     * Пользовательский коллбэк начала анимации.
+     * Можно использовать для установки начальных значений анимации.
      */
     app.onStart = function () {
     }
 
     /**
-     * Пользовательский коллбэк шага анимации
-     * @param progressSrc
-     * @param progressEased
+     * Пользовательский коллбэк шага анимации.
+     * Должен содержать код изменения анимируемых CSS-свойств на основе progressEased.
+     *
+     * @param progressSrc {number} [0..1]
+     * @param progressEased {number} [0..1]
      */
     app.onStep = function (progressSrc, progressEased) {
     }
@@ -94,6 +97,8 @@ function IexEasedAnimation(){
     }
 
     app.start = function() {
+        app.onStart();
+
         app.easingFunction = app.easings[app.easing];
         if (typeof app.easingFunction !== 'function') {
             console.log(app.errPrefix + 'Функция анимации "' + app.easing + '" пока не поддерживается!');
@@ -108,11 +113,13 @@ function IexEasedAnimation(){
             }
         });
 
-        if (!callbackErr) {
-            app.timeStart = Date.now();
-            app.onStart();
-            requestAnimationFrame(app._onStep);
+        if (callbackErr) {
+            return;
         }
+
+        app.timeStart = Date.now();
+        app.duration = parseFloat(app.duration.replace(',','.')) * 1000;
+        requestAnimationFrame(app._onStep);
     }
 }
 
@@ -132,16 +139,14 @@ $(function(){
 
     iexAnimation.onStart = function () {
         offsetMax = parseInt($offset.val());
-        iexAnimation.duration = parseInt($duration.val());
+        iexAnimation.duration = $duration.val();
         iexAnimation.easing = $easing.val();
-console.log('onStart', iexAnimation);
         offsetCur = 0;
         $block.css('transform', 'translateX('+offsetCur+'px)');
     }
 
     iexAnimation.onStep = function (progressSrc, progressEased) {
         offsetCur = offsetMax * progressEased;
-console.log('onStep', offsetCur, progressSrc, progressEased);
         $block.css('transform', 'translateX('+offsetCur+'px)');
     }
 
