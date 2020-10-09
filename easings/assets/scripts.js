@@ -150,6 +150,10 @@ $(function(){
         $block.css('transform', 'translateX('+offsetCur+'px)');
     }
 
+    iexAnimation.onFinish = function () {
+        $block.css('transform', 'translateX('+0+'px)');
+    }
+
     $button.click(function(){
         iexAnimation.start();
     });
