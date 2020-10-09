@@ -152,6 +152,7 @@ $(function(){
         iexAnimation.duration = $duration.val();
         iexAnimation.easing = $easing.val();
         setCss($block, offsetCur, rotateCur);
+        $block.removeClass('alert-info').addClass('alert-success');
     }
 
     iexAnimation.onStep = function (progressSrc, progressEased) {
@@ -161,7 +162,7 @@ $(function(){
     }
 
     iexAnimation.onFinish = function () {
-        //setCss($block, 0, 0);
+        $block.removeClass('alert-success').addClass('alert-info');
     }
 
     $button.click(function(){
