@@ -131,27 +131,37 @@ $(function(){
         $easings = $('#easings'),
         $easing = $('#easing'),
         $offset = $('#offset'),
+        $rotate = $('#rotate'),
         $duration = $('#duration'),
         offsetMax = 0,
-        offsetCur = 0;
+        offsetCur = 0,
+        rotateMax = 0,
+        rotateCur = 0;
 
     $easings.text( Object.keys(iexAnimation.easings).join(', ') );
 
+    function setCss($block, offset, rotate) {
+        $block.css('transform', 'translateX('+offset+'px) rotate('+rotate+'deg)');
+    }
+
     iexAnimation.onStart = function () {
+        offsetCur = 0;
+        rotateCur = 0;
         offsetMax = parseInt($offset.val());
+        rotateMax = parseInt($rotate.val());
         iexAnimation.duration = $duration.val();
         iexAnimation.easing = $easing.val();
-        offsetCur = 0;
-        $block.css('transform', 'translateX('+offsetCur+'px)');
+        setCss($block, offsetCur, rotateCur);
     }
 
     iexAnimation.onStep = function (progressSrc, progressEased) {
         offsetCur = offsetMax * progressEased;
-        $block.css('transform', 'translateX('+offsetCur+'px)');
+        rotateCur = rotateMax * progressEased;
+        setCss($block, offsetCur, rotateCur);
     }
 
     iexAnimation.onFinish = function () {
-        $block.css('transform', 'translateX('+0+'px)');
+        //setCss($block, 0, 0);
     }
 
     $button.click(function(){
