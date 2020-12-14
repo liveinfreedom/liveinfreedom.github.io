@@ -14,11 +14,16 @@ var app02 = new Vue({
         first_name: "Вася",
         last_name: "Пупкин"
     },
-    computed: {
+    computed: { // кэшируемые методы
         full_name: function(){
             return this.first_name + ' ' + this.last_name; //Вася Пупкин
         },
-        date_field: function () { // кэшируемое поле (выполняется только один раз, т.к. нет зависимостей)
+        date_field: function () { // выполняется только один раз, т.к. нет зависимостей
+            return Date.now();
+        }
+    },
+    methods: { // НЕкэшируемые методы (выполняютеся каждый раз)
+        date_method: function () {
             return Date.now();
         }
     },
@@ -33,11 +38,7 @@ var app02 = new Vue({
             console.log('изменено full_name (вычисляемое поле)', arguments);
         }
     },
-    methods: {
-        date_method: function () { // некэшируется и выполнятеся каждый раз
-            return Date.now();
-        }
-    },
+
     
     // методы жизненного цикла
     beforeCreate: function(){
