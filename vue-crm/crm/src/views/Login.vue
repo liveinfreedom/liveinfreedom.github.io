@@ -6,19 +6,43 @@
         <input
             id="email"
             type="text"
-            class="validate"
+            v-model.trim="email"
+            :class="{invalid: $v.email.$dirty && (!$v.email.required || !$v.email.email) }"
         >
         <label for="email">Email</label>
-        <small class="helper-text invalid">Email</small>
+        <small
+            class="helper-text invalid"
+            v-if="$v.email.$dirty && !$v.email.required"
+        >
+          Введите email
+        </small>
+        <small
+            class="helper-text invalid"
+            v-else-if="$v.email.$dirty && !$v.email.email"
+        >
+          Некорректный email
+        </small>
       </div>
       <div class="input-field">
         <input
             id="password"
             type="password"
-            class="validate"
+            v-model.trim="password"
+            :class="{invalid: $v.password.$dirty && (!$v.password.required || !$v.password.minLength) }"
         >
         <label for="password">Пароль</label>
-        <small class="helper-text invalid">Password</small>
+        <small
+            class="helper-text invalid"
+            v-if="$v.password.$dirty && !$v.password.required"
+        >
+          Введите email
+        </small>
+        <small
+            class="helper-text invalid"
+            v-else-if="$v.password.$dirty && !$v.password.minLength"
+        >
+          Пароль должен быть более {{ $v.password.$params.minLength.min }}. Сейчас он {{ password.length }} символов.
+        </small>
       </div>
     </div>
     <div class="card-action">
@@ -41,10 +65,29 @@
 </template>
 
 <script>
+import {email, required, minLength} from 'vuelidate/lib/validators'
+
 export default {
   name: 'Login',
+  data: () => ({
+    email: '',
+    password: '',
+  }),
+  validations: {
+    email: {email, required},
+    password: {required, minLength: minLength(6)},
+  },
   methods: {
     submitHandler(){
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
+      const formData = {
+        email: this.email,
+        password: this.password,
+      }
+      console.log(formData);
       this.$router.push('/')
     }
   }
