@@ -1,1 +1,1 @@
-console.log('analytics.js ready')
+console.log('analytics.js ready!')
