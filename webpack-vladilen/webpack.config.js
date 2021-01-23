@@ -19,6 +19,10 @@ module.exports = {
         }),
         new CleanWebpackPlugin() // чистит старые сборки файлов из optput-папки
     ],
+    devServer: {  // изменения в реальном времени с module hot replacement (в package.json скрипт watch)
+        open: true, // открывать окно юраузера при запуске
+        port: 4200,
+    },
     optimization: {
         splitChunks: { // чтобы например jquery билдился не во все точки входа (index, analytics), а только в одну
             chunks: 'all'

@@ -1,3 +1,3 @@
 import * as $ from 'jquery'
 
-console.log('analytics.js ready!')
+console.log('analytics.js ready!!!')
