@@ -1,38 +1,81 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    context: path.resolve(__dirname, 'src'), // корневая папка исходников для сборки (путь должен быть абсолютным)
+
+    // корневая папка исходников для сборки (путь должен быть абсолютным), чтобы не писать везде path.resolve(__dirname, 'src')
+    context: path.resolve(__dirname, 'src'),
+
+    // или production
     mode: 'development',
+
+    // точки входа
     entry: {
         main: './index.js',
         analytics: './analytics.js'
     },
+
     output: {
         filename: '[name].bundle.[contenthash].js',
         path: path.resolve(__dirname, 'dist') // корневая папка для билда (путь должен быть абсолютным
     },
+
     plugins: [
+        // Пакет html-webpack-plugin
         new HTMLWebpackPlugin({ // цепляет HTML-файлы в качестве исходников
             template: './index.html'
         }),
-        new CleanWebpackPlugin() // чистит старые сборки файлов из optput-папки
+
+        // Пакет mini-css-extract-plugin
+        // сохраняет загруженные лоадером css-ки в отдельные файлы
+        new MiniCssExtractPlugin({
+            filename: '[name].bundle.[contenthash].css',
+            publicPath: '', // без этого будет ошибка компиляции
+        }),
+
+        // Пакет clean-webpack-plugin
+        // чистит старые сборки файлов из optput-папки
+        new CleanWebpackPlugin(),
+
+        // Пакет copy-webpack-plugin
+        // копирует из src в dist/build
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    //from: path.resolve(__dirname, 'src/favicon.ico'),
+                    from: './favicon.ico',
+                    to: path.resolve(__dirname, 'dist')
+                }
+            ]
+        })
     ],
-    devServer: {  // изменения в реальном времени с module hot replacement (в package.json скрипт watch)
+
+    // Пакет webpack-dev-server
+    // изменения в реальном времени с module hot replacement (в package.json скрипт watch)
+    // но эти изменения в папку build/dist не попадают, они остаются в оперативке, и нужно делать обачный билд (dev/prod)
+    devServer: {
         open: true, // открывать окно юраузера при запуске
         port: 4200,
     },
+
     optimization: {
-        splitChunks: { // чтобы например jquery билдился не во все точки входа (index, analytics), а только в одну
+        // чтобы например jquery билдился не во все точки входа (index, analytics), а только в одну
+        splitChunks: {
             chunks: 'all'
         }
     },
+
+    // лоадеры
+    // несколько лоадеров в массиве применяются справа-налево
     module: {
         rules: [
             {
                 test: /\.css$/, // регулярник для выбора типа файлов по расширрению
-                use: ['style-loader', 'css-loader'] // какие лоадеры применять (применяется справа-налево) - css грузит файл, а style - подключает в шапку
+                //use: ['style-loader', 'css-loader'] // css-* грузит файл, а style-* - подключает в шапку ИНЛАЙНОВО
+                use: [MiniCssExtractPlugin.loader, 'css-loader'] // вариант с выгрузкой CSS в отдельные файлы (а не илайново в шапку)
             },
             {
                 test: /\.(png)|(jpg)|(jpeg)|(svg)|(gif)$/, // картиноки
