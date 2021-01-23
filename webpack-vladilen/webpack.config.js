@@ -19,11 +19,32 @@ module.exports = {
         }),
         new CleanWebpackPlugin() // чистит старые сборки файлов из optput-папки
     ],
+    optimization: {
+        splitChunks: { // чтобы например jquery билдился не во все точки входа (index, analytics), а только в одну
+            chunks: 'all'
+        }
+    },
     module: {
         rules: [
             {
                 test: /\.css$/, // регулярник для выбора типа файлов по расширрению
                 use: ['style-loader', 'css-loader'] // какие лоадеры применять (применяется справа-налево) - css грузит файл, а style - подключает в шапку
+            },
+            {
+                test: /\.(png)|(jpg)|(jpeg)|(svg)|(gif)$/, // картиноки
+                use: ['file-loader']
+            },
+            {
+                test: /\.(ttf)|(woff)|(eot)$/, // шрифты
+                use: ['file-loader']
+            },
+            {
+                test: /\.xml$/, // xml
+                use: ['xml-loader']
+            },
+            {
+                test: /\.csv$/, // csv
+                use: ['csv-loader'] // требует для своей работы papaparse, т.е. ставить нужно csv-loader и papaparse
             }
         ]
     }
