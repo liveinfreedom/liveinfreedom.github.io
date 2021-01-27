@@ -6,14 +6,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 
-const optimization = (env)=>{
+const optimization = (isProd) => {
     let setts = {
-        // чтобы например jquery билдился не во все точки входа (index, analytics), а только в одну
+        // чтобы не было дублирования кода подключаемых модулей
+        // т.е. например jquery билдился не во все точки входа (index, analytics), а только в одну
         splitChunks: {
             chunks: 'all'
         },
     }
-    if (env.production) {
+    if (isProd) {
         // минимизация CSS и JS
         setts['minimize'] = true;
         setts['minimizer'] = [
@@ -25,9 +26,11 @@ const optimization = (env)=>{
 }
 
 module.exports = env => {
+    //console.log('[webpack.config.js] env.production =', env.production, 'env.development =', env.development);
     // development: env.development === true
     // production: env.production === true
-    // console.log('webpack.config.js env.production =', env.production, 'env.development =', env.development);
+    let isProd = env.production === true;
+
     return {
 
         // корневая папка исходников для сборки (путь должен быть абсолютным), чтобы не писать везде path.resolve(__dirname, 'src')
@@ -43,7 +46,7 @@ module.exports = env => {
         },
 
         output: {
-            filename: '[name].bundle.[contenthash].js',
+            filename: (isProd ? '[name].[hash].js' : '[name].js'),
             path: path.resolve(__dirname, 'dist') // корневая папка для билда (путь должен быть абсолютным
         },
 
@@ -55,7 +58,7 @@ module.exports = env => {
 
             // сохраняет загруженные лоадером css-ки в отдельные файлы
             new MiniCssExtractPlugin({
-                filename: '[name].bundle.[contenthash].css',
+                filename: (isProd ? '[name].[hash].css' : '[name].css'),
             }),
 
             // чистит старые сборки файлов из optput-папки
@@ -80,16 +83,27 @@ module.exports = env => {
             port: 4200,
         },
 
-        optimization: optimization(env),
+        optimization: optimization(isProd),
 
         // лоадеры
         // несколько лоадеров в массиве применяются справа-налево
         module: {
             rules: [
-                {
+                { // css
                     test: /\.css$/, // регулярник для выбора типа файлов по расширрению
-                    //use: ['style-loader', 'css-loader'] // css-* грузит файл, а style-* - подключает в шапку ИНЛАЙНОВО
-                    // вариант с выгрузкой CSS в отдельные файлы (а не илайново в шапку)
+                    //use: ['style-loader', 'css-loader'] // style-loader подключает стили в шапку ИНЛАЙНОВО
+                    use: [
+                        {
+                            loader: MiniCssExtractPlugin.loader, // плагин выгружает CSS в отдельные файлы (а не илайново в шапку как style-loader)
+                            options: {
+                                publicPath: '', // без этого параметра компиляция завершается с ошибкой
+                            },
+                        },
+                        'css-loader',
+                    ]
+                },
+                { // less
+                    test: /\.less$/,
                     use: [
                         {
                             loader: MiniCssExtractPlugin.loader,
@@ -98,23 +112,53 @@ module.exports = env => {
                             },
                         },
                         'css-loader',
+                        'less-loader', // кроме лоадера требуется одноименный пакет less (интерпретатор)
                     ]
                 },
-                {
-                    test: /\.(png)|(jpg)|(jpeg)|(svg)|(gif)$/, // картиноки
-                    use: ['file-loader']
+                { // sass/scss
+                    test: /\.s[ac]ss$/,
+                    use: [
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                publicPath: '', // без этого параметра компиляция завершается с ошибкой
+                            },
+                        },
+                        'css-loader',
+                        'sass-loader', // кроме лоадера требуется пакет sass (интерпретатор)
+                    ]
                 },
-                {
-                    test: /\.(ttf)|(woff)|(eot)$/, // шрифты
-                    use: ['file-loader']
+                { // картинки
+                    test: /\.(png)|(jpg)|(jpeg)|(svg)|(gif)$/,
+                    loader: 'file-loader',
+                    options: { // если используем options, то вместо use должен быть loader
+                        name: 'images/[name].[ext]', // папки создаются автоматом
+                    }
                 },
-                {
-                    test: /\.xml$/, // xml
+                { // шрифты
+                    test: /\.(ttf)|(woff)|(eot)$/,
+                    loader: 'file-loader',
+                    options: { // если используем options, то вместо use должен быть loader
+                        name: 'fonts/[name].[ext]', // папки создаются автоматом
+                    }
+                },
+                { // xml
+                    test: /\.xml$/,
                     use: ['xml-loader']
                 },
-                {
-                    test: /\.csv$/, // csv
-                    use: ['csv-loader'] // требует для своей работы papaparse, т.е. ставить нужно csv-loader и papaparse
+                { // csv
+                    test: /\.csv$/,
+                    use: ['csv-loader'] // требует для своей работы papaparse (ставим csv-loader и papaparse)
+                },
+                { // babel
+                    test: /\.m?js$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    }
                 }
             ]
         }

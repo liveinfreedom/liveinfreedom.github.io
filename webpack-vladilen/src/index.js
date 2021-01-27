@@ -1,6 +1,8 @@
 import Post from './Post'
 import * as $ from 'jquery'
 import './styles/styles.css'
+import './styles/less.less'
+import './styles/scss.scss'
 import logo from './assets/webpack-logo.png'
 import json from './assets/json.json' // для JSON лоадеров не требуется
 import xml from './assets/data.xml'
