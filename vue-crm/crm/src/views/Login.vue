@@ -79,17 +79,25 @@ export default {
     password: {required, minLength: minLength(6)},
   },
   methods: {
-    submitHandler(){
+    async submitHandler(){
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
       }
+
       const formData = {
         email: this.email,
         password: this.password,
       }
-      console.log(formData);
-      this.$router.push('/')
+      //console.log(formData);
+
+      try {
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/')
+      } catch (e) {
+
+      }
+
     }
   },
   mounted() {

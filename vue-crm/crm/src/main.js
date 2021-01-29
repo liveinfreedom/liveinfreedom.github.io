@@ -26,13 +26,14 @@ var firebaseConfig = {
   messagingSenderId: "897712724921",
   appId: "1:897712724921:web:12fd92992b444d3e9af468"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 let app
 
 firebase.auth().onAuthStateChanged(()=>{
-  if (!app) {
+  if (!app) { // чтобы каждый раз не создавать новый app, т.к. onAuthStateChanged() может выполняться не один раз
     app = new Vue({
       router,
       store,
