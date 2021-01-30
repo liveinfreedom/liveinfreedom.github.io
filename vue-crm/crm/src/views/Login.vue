@@ -89,7 +89,7 @@ export default {
         email: this.email,
         password: this.password,
       }
-      //console.log(formData);
+console.log('submitHandler()', formData);
 
       try {
         await this.$store.dispatch('login', formData)

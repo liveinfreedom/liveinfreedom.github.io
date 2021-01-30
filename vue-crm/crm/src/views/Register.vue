@@ -100,10 +100,11 @@ export default {
     email: {email, required},
     password: {required, minLength: minLength(6)},
     name: {required},
-    agree: {checked: v => v},
+    //agree: {checked: v => v},
   },
   methods: {
-    submitHandler(){
+    async submitHandler(){
+console.log('submitHandler() before');
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
@@ -113,8 +114,14 @@ export default {
         password: this.password,
         name: this.name,
       }
-      console.log(formData);
-      this.$router.push('/')
+console.log('submitHandler()', formData);
+
+      try {
+        await this.$store.dispatch('register', formData)
+        this.$router.push('/')
+      } catch (e) {
+
+      }
     }
   }
 }
