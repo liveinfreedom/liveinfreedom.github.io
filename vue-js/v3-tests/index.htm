@@ -32,6 +32,22 @@
     </ol>
 </div>
 
+<div class="mb-5"></div>
+
+<h3>3. DynamicItems</h3>
+<div class="row" id="dynamic-items">
+    <div class="col-4">
+        <div class="mt-2">
+            <alert-item
+                v-for="task in tasks"
+                :alert="task"
+                :key="task.id"
+            ></alert-item>
+        </div>
+        <button type="button" class="btn btn-success">Plus one +</button>
+    </div>
+</div>
+
 <script src="https://unpkg.com/vue@next"></script>
 <script src="assets/app.js"></script>
 </body>
