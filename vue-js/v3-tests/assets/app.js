@@ -48,25 +48,31 @@ const dynamicItems = {
                 { id: 3, text: 'Build something awesome' }
             ]
         }
+    },
+    methods: {
+        remove(){
+            console.log('remove() this.alert', this.alert.id, this.alert.text)
+            dynamicItemsRoot.$data.tasks.forEach((task, index)=>{
+                console.log('forEach() task, this.alert.id', task.id, this.alert.id)
+                if (task.id === this.alert.id) {
+                    delete dynamicItemsRoot.$data.tasks[index]
+                }
+            })
+        }
     }
 }
 const dynamicItemsApp = Vue.createApp(dynamicItems)
 
 dynamicItemsApp.component('alert-item', {
     props: ['alert'],
+    emits: ['enlargeText'],
     template:
         `<div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ alert.text }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="remove">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="$emit('remove', )">
                 <span aria-hidden="true">&times;</span>
             </button>
-        </div>`,
-    methods: {
-        remove(){
-            console.log('dynamicItemsRoot.tasks[0]', dynamicItemsRoot.tasks[0])
-            console.log('this.alert', this.alert)
-        }
-    }
+        </div>`
 })
 
 const dynamicItemsRoot = dynamicItemsApp.mount('#dynamic-items')
