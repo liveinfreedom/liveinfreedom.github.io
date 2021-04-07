@@ -1,4 +1,4 @@
-let iexApp = {};
+let vueApps = {};
 
 // 1. Counter
 const Counter = {
@@ -22,7 +22,7 @@ const Counter = {
         }
     }
 }
-Vue.createApp(Counter).mount('#counter')
+vueApps['Counter'] = Vue.createApp(Counter).mount('#counter')
 
 // 2. ListRendering
 const ListRendering = {
@@ -36,10 +36,10 @@ const ListRendering = {
         }
     }
 }
-Vue.createApp(ListRendering).mount('#list-rendering')
+vueApps['ListRendering'] = Vue.createApp(ListRendering).mount('#list-rendering')
 
 // 3. DynamicItems
-const dynamicItems = {
+const DynamicItems = {
     data() {
         return {
             tasks: [
@@ -65,4 +65,4 @@ const dynamicItems = {
         }
     }
 }
-Vue.createApp(dynamicItems).mount('#dynamic-items');
+vueApps['DynamicItems'] = Vue.createApp(DynamicItems).mount('#dynamic-items');
