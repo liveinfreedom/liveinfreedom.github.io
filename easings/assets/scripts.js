@@ -3,7 +3,6 @@ $(function(){
         iexAnimation = new IexEasedAnimation(),
         $block = $('.alert'),
         $button = $('button'),
-        $easings = $('#easings'),
         $easing = $('#easing'),
         $offset = $('#offset'),
         $rotate = $('#rotate'),
@@ -13,7 +12,9 @@ $(function(){
         rotateMax = 0,
         rotateCur = 0;
 
-    $easings.text( Object.keys(iexAnimation.easings).join(', ') );
+    let optionsHtml = '';
+    Object.keys(iexAnimation.easings).forEach(easing => optionsHtml += '<option value="'+easing+'">'+easing+'</option>');
+    $easing.html(optionsHtml);
 
     function setCss($block, offset, rotate) {
         $block.css('transform', 'translateX('+offset+'px) rotate('+rotate+'deg)');
