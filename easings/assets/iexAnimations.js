@@ -73,6 +73,11 @@ function IexEasedAnimation(){
      * @type {number}
      */
     app.duration = 0;
+
+    /**
+     * Длительность анимации пересчитанная в милисекунды
+     * @type {number}
+     */
     app._duration = 0;
 
     /**
