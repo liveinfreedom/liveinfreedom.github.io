@@ -57,7 +57,7 @@ function IexEasedAnimation(){
     };
 
     /**
-     * Название функции анимации
+     * Название функции анимации по-умолчанию
      * @type {string}
      */
     app.easing = 'easeInOutCubic';
