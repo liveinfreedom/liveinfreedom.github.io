@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-        async function fetch() {
+        async function fetchList() {
             console.log('photos...');
             try {
                 const response = await axios.get('https://jsonplaceholder.typicode.com/photos');
@@ -44,7 +44,31 @@
                 console.error('todos',error);
             }
         }
-        fetch();
+
+        function getPhotos() {
+            try {
+                return axios.get('https://jsonplaceholder.typicode.com/photos');
+            } catch (error) {
+                return error;
+            }
+        }
+
+        function getUsers() {
+            try {
+                return axios.get('https://jsonplaceholder.typicode.com/users');
+            } catch (error) {
+                return error;
+            }
+        }
+
+        async function getPhotosAndUsers(){
+            console.log('photos...');
+            let photosResponse = await getPhotos();
+            console.log('photos:', photosResponse.data);
+            console.log('users...');
+            let usersResponse = await getUsers();
+            console.log('users:', usersResponse.data);
+        }
 
         // console.log('start...');
         // async function asyncOperations() {
@@ -59,13 +83,16 @@
         //     }, 2000));
         //     console.log('end');
         // }
-        // asyncOperations();
+        //asyncOperations();
     </script>
 
 </head>
 <body class="container">
 
 <h1>Async-await + axios</h1>
+<button onclick="fetchList()">fetchList()</button>
+<br>
+<button onclick="getPhotosAndUsers()">getPhotosAndUsers()</button>
 
 </body>
 </html>
