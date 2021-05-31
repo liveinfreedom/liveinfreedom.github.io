@@ -70,6 +70,12 @@
             console.log('users:', usersResponse.data);
         }
 
+        async function returnPhotosData(){
+            console.log('returnPhotosData...')
+            let response = await getPhotos()
+            return response.data
+        }
+
         // console.log('start...');
         // async function asyncOperations() {
         //     await new Promise((resolve, reject) => setTimeout(()=>{
