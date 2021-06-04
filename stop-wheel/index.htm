@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Stop wheel</title>
+</head>
+<body>
+
+<div style="margin: 0 auto; width: 900px; background-color: #9fcdff; height: 300vh;">
+</div>
+
+<script>
+    document.querySelector('div').addEventListener('wheel', function(e){
+        console.log('wheel', e.deltaY);
+        e.preventDefault();
+        //e.stopPropagation();
+    })
+</script>
+
+</body>
+</html>
