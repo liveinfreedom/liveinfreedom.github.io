@@ -157,3 +157,12 @@ function IexEasedAnimation(){
         requestAnimationFrame(app._onStep);
     }
 }
+
+/**
+ * @constructor
+ */
+function IexEasedTimeline(){
+    let app = this;
+
+
+}
