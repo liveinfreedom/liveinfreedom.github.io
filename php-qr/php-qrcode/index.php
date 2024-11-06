@@ -7,7 +7,7 @@ require './vendor/autoload.php';
 
 $dataSrc = 'otpauth://totp/test?secret=B3JX4VCVJDVNXNZ5&issuer=chillerlan.net';
 $dataDecoded = '';
-$imgPath = './qr.png';
+$imgPath = './big.png';
 
 $options = new QROptions([
     'version'    => 5,
@@ -16,7 +16,7 @@ $options = new QROptions([
 ]);
 
 $qr = new QRCode($options);
-$qr->render($dataSrc, $imgPath);
+// $qr->render($dataSrc, $imgPath);
 
 try{
     $dataDecoded = (string)$qr->readFromFile($imgPath);
