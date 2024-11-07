@@ -5,27 +5,24 @@ use chillerlan\QRCode\Output\QROutputInterface;
 
 require './vendor/autoload.php';
 
-$dataSrc = 'otpauth://totp/test?secret=B3JX4VCVJDVNXNZ5&issuer=chillerlan.net';
-$dataDecoded = '';
-$imgPath = './big.png';
+$dataForQr = '| ID PDF-фала: 123 | Номер страницы: 5 |';
+$qrImgPath = './img/qr.png';
 
-$options = new QROptions([
+$qrOptions = new QROptions([
     'version'    => 5,
     'outputType' => QROutputInterface::GDIMAGE_PNG,
     'eccLevel'   => EccLevel::M,
 ]);
+$qr = new QRCode($qrOptions);
+$qr->render($dataForQr, $qrImgPath);
 
-$qr = new QRCode($options);
-// $qr->render($dataSrc, $imgPath);
-
-try{
-    $dataDecoded = (string)$qr->readFromFile($imgPath);
-}
-catch(Throwable $e){
-    $dataDecoded = 'Ошибка: '.$e->getMessage();
-}
+// try{
+//     $dataDecoded = (string)$qr->readFromFile($imgPath);
+// }
+// catch(Throwable $e){
+//     $dataDecoded = 'Ошибка: '.$e->getMessage();
+// }
+// Данные QR: $dataDecoded
 
 ?>
-<img src="<?= $imgPath ?>" alt="QR Code" />
-<br>
-Данные в QR-коде: <?= $dataDecoded ?>
+<img src="<?= $qrImgPath ?>" alt="QR Code" />

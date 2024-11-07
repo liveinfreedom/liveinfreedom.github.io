@@ -1,0 +1,136 @@
+1. В обработку адресов bitrix добавляем строку (/bitrix/admin/urlrewrite_list.php?lang=ru):
+условие: #^(/upload/iex_resize_cache/.*?)$#
+файл: /tools/php/resize.php
+правило: uri=$1
+
+2. В папку /tools/php/ (если нет такой, то создаем) кладем файлы:
+config.php
+resizer.class.php
+resize.php
+resizetools.php
+functions.php
+
+3. В файл /local/php_interface/init.php (/bitrix/php_interface/init.php) добавляем строку:
+require_once($_SERVER['DOCUMENT_ROOT'].'/tools/php/resizetools.php');
+
+!!! Если в файле init.php нет открытого тега <?php то обязательно вставляем его перед добавляемой строкой !!!
+
+3.5 Если необходимо ресайзить картинки из папок отличных от /upload/iblock/ (например /images/):
+в файле config.php находим массив $iexResizerResizeDirs и добавляем в него пути начинающиеся со
+слеша (корень сайта) и заканчивающиеся слешем
+
+4. В файле /tools/php/config.php заполняем массив $iexResizerSizes:
+
+Массив для примера:
+
+$iexResizerSizes = array(
+    'catalog_big'=>array(
+        'plate'=>array('width'=>500, 'height'=>500),
+        'resize'=>array('width'=>300, 'height'=>300),
+        'plate_color'=>array(255, 252, 255),
+        'plate_alpha'=>50,
+        'quality'=>90,
+        'crop'=>array(0, 0),
+        'position'=>'lefttop',
+        'resize_type'=>1,
+        'resize_small'=>1,
+        'convert' => ['png'=>'webp'],
+        'watermark'=>array(
+            'path'=>$_SERVER['DOCUMENT_ROOT'].'/tools/php/watermark.png',
+            'fill'=>'exact',
+            'position'=>'centercenter'
+        )
+    ),
+    'catalog_small'=>array(
+        'resize'=>array('width'=>100, 'height'=>'auto')
+    )
+);
+
+Все настройки с комментариями:
+
+plate - каким будет результирующее изображение: (по-умолчанию auto)
+    array('width'=>'auto', 'height'=>'auto') - автоматически подогнать под размер ужатого изображения
+    array('width'=>300, 'height'=>300) - фиксированного размера
+    array('width'=>300, 'height'=>'auto') - ширина фиксированная, высота как изображение
+
+plate_color - каким цветом залить фон изображения (по-умолчанию array(255, 255, 255)) 0-255
+plate_alpha - альфа канал для фона (по-умолчанию: не использовать) 0-127
+    0 - непрозрачное
+    127 - полностью прозрачное
+
+quality - качество результирующего изображения (по-умолчанию 100)
+
+position - позиция в результирующем изображении если есть "белые поля" (по-умолчанию centercenter)
+    lefttop
+    centertop
+    righttop
+    leftcenter
+    centercenter
+    rightcenter
+    leftbottom
+    centerbottom
+    rightbottom
+
+resize - до какого размера масштабировать изображение (обязательное)
+    array('width'=>300, 'height'=>300)
+    array('width'=>300, 'height'=>'auto')
+    array('width'=>'auto', 'height'=>300)
+
+resize_type - как масштабировать изображение (обязательное)
+    1 - Пропорционально без "белых полей" ненужное отрезается
+    2 - Пропорционально с "белыми полями" ненужного нет (белых полей не будет, если plate незадан)
+    3 - Не пропорционально (до нужного) коверкает изображение
+
+resize_small - как масштабировать если меньше чем нужно (по-умолчанию 1)
+    1 - Оставить как есть
+    2 - Расширить пропорционально без "белых полей"
+    3 - Расширить пропорционально с "белыми полями"
+    4 - Расширить не пропоционально (до нужного)
+
+watermark - массив параметров watermark
+    path - путь к изображению (обязательное)
+    fill - как заполнить изображение (по-умолчанию exact)
+        exact - наложить как есть
+        resize - ужать, если больше и наложить
+        repeat - раскопировать на изображение, если меньше результирующего (не поддерживается)
+    resize_type - как масштабировать watermark Не пропорционально (до нужного) коверкает изображение (по-умолчанию)
+        1 - Пропорционально без "белых полей" ненужное отрезается
+        2 - Пропорционально с "белыми полями" ненужного нет
+    position - позиция в результирующем изображении ( по-умолчанию centercenter )
+        lefttop
+        centertop
+        righttop
+        leftcenter
+        centercenter
+        rightcenter
+        leftbottom
+        centerbottom
+        rightbottom
+
+crop - обрезать со всех сторон картинку цветом пикселя из x, y (обычно срезать белые поля)
+    x, y - Координаты цвета пикселя для обрезки
+
+progressive - Прогрессивный jpeg
+    0 - нет (по-умолчанию)
+    1 - да
+
+convert - изменить расширение файла при сохранении (по-умолчанию как у оригинала)
+    jpg=>png - оригинал jpg сохранить в png
+    jpeg=>png
+    png=>gif - оригинал png сохранить в gif
+
+5. В нужном месте вызываем функцию: IexGetResizedPath
+
+если есть путь к исходному изображению
+<img src="<?php echo IexGetResizedPath($arResult['DETAIL_PICTURE']['SRC'], 'catalog_big'); ?>" alt=""/>
+
+если есть ID (число) изображения
+
+<img src="<?php echo IexGetResizedPath(CFile::GetPath($arItem['PROPERTIES']['IMAGE']['VALUE']), 'catalog_big'); ?>" alt=""/>
+
+
+$arFile = CFile::GetFileArray($arItem["PREVIEW_PICTURE"]["ID"]); // Не всегда
+
+6. Если изображение не появилось - то смотрим в файл /tools/php/images_errors.log там будут ошибки
+
+7. Для удаления изображений снести папку /upload/iex_resize_cache/
