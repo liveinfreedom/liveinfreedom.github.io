@@ -5,7 +5,7 @@ use chillerlan\QRCode\Output\QROutputInterface;
 
 require './vendor/autoload.php';
 
-$dataForQr = '| ID PDF-фала: 123 | Номер страницы: 5 |';
+$dataForQr = ['fileId'=>123, 'pageNum'=>4];
 $qrImgPath = './img/qr.png';
 
 $qrOptions = new QROptions([
@@ -14,15 +14,17 @@ $qrOptions = new QROptions([
     'eccLevel'   => EccLevel::M,
 ]);
 $qr = new QRCode($qrOptions);
-$qr->render($dataForQr, $qrImgPath);
+$qr->render(json_encode($dataForQr), $qrImgPath);
 
-// try{
-//     $dataDecoded = (string)$qr->readFromFile($imgPath);
-// }
-// catch(Throwable $e){
-//     $dataDecoded = 'Ошибка: '.$e->getMessage();
-// }
-// Данные QR: $dataDecoded
+$decodingErr = '';
+try{
+    $decodedData = (string)$qr->readFromFile($qrImgPath);
+} catch(Throwable $e){
+    $decodingErr = 'Ошибка: '.$e->getMessage();
+}
 
 ?>
-<img src="<?= $qrImgPath ?>" alt="QR Code" />
+<img src="<?= $qrImgPath ?>" alt="QR Code" /><br>
+<pre>
+    Данные в QR-коде:<?= $decodingErr ? $decodingErr : print_r(json_decode($decodedData, true), true) ?>
+</pre>
