@@ -26,5 +26,5 @@ try{
 ?>
 <img src="<?= $qrImgPath ?>" alt="QR Code" /><br>
 <pre>
-    Данные в QR-коде:<?= $decodingErr ? $decodingErr : print_r(json_decode($decodedData, true), true) ?>
+    Данные в QR-коде:<?= $decodingErr ?: print_r(json_decode($decodedData, true), true) ?>
 </pre>
